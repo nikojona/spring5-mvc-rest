@@ -1,21 +1,19 @@
 package guru.springframework.bootstrap;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 import guru.springframework.domain.Category;
 import guru.springframework.repositories.CategoryRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
 
 	private CategoryRepository categoryRepository;
 	
-	public Bootstrap(CategoryRepository categoryRepository) {
-		
+		public Bootstrap(CategoryRepository categoryRepository) {
 		this.categoryRepository = categoryRepository;
 	}
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		
