@@ -6,6 +6,9 @@ import guru.springframework.repositories.CategoryRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CategoryServiceImpl implements CategoryService {
 	
 	private final CategoryMapper categoryMapper;
