@@ -11,17 +11,20 @@ public class Bootstrap implements CommandLineRunner {
 	private CategoryRepository categoryRepository;
 	
 		public Bootstrap(CategoryRepository categoryRepository) {
-		this.categoryRepository = categoryRepository;
-	}
+			this.categoryRepository = categoryRepository;
+		}
 
 	@Override
 	public void run(String... args) throws Exception {
 		
+		Category fruits = new Category();
+		fruits.setName("Fruits");
+
 		Category dried = new Category();
 		dried.setName("Dried");
 		
-		Category fruits = new Category();
-		fruits.setName("Fruits");
+		Category fresh = new Category();
+		dried.setName("Fresh");
 		
 		Category exotic = new Category();
 		exotic.setName("Exotic");
@@ -29,8 +32,9 @@ public class Bootstrap implements CommandLineRunner {
 		Category nuts = new Category();
 		nuts.setName("Nuts");
 				
-		categoryRepository.save(dried); 
 		categoryRepository.save(fruits);
+		categoryRepository.save(dried);
+		categoryRepository.save(fresh);
 		categoryRepository.save(exotic);
 		categoryRepository.save(nuts);
 		

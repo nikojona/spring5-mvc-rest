@@ -1,11 +1,10 @@
 package guru.springframework.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import guru.springframework.api.v1.mapper.CategoryMapper;
 import guru.springframework.api.v1.model.CategoryDTO;
 import guru.springframework.repositories.CategoryRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategoryServiceImpl implements CategoryService {
 	

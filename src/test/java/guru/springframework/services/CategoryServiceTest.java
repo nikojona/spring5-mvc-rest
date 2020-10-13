@@ -1,23 +1,24 @@
 package guru.springframework.services;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 import guru.springframework.api.v1.mapper.CategoryMapper;
 import guru.springframework.api.v1.model.CategoryDTO;
 import guru.springframework.domain.Category;
 import guru.springframework.repositories.CategoryRepository;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
+@TestInstance(Lifecycle.PER_CLASS)
 public class CategoryServiceTest {
 	
 	public static final Long ID = 2L;
@@ -27,7 +28,7 @@ public class CategoryServiceTest {
 	@Mock
 	CategoryRepository categoryRepository;
 	
-	@Before
+	@BeforeAll
 	public void setUp() throws Exception {
 		
 		MockitoAnnotations.initMocks(this);
