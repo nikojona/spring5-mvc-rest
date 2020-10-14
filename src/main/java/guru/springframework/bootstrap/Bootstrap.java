@@ -24,7 +24,7 @@ public class Bootstrap implements CommandLineRunner {
 		dried.setName("Dried");
 		
 		Category fresh = new Category();
-		dried.setName("Fresh");
+		fresh.setName("Fresh");
 		
 		Category exotic = new Category();
 		exotic.setName("Exotic");
