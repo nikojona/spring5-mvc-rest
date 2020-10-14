@@ -3,10 +3,13 @@ package guru.springframework.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import guru.springframework.api.v1.mapper.CustomerMapper;
 import guru.springframework.api.v1.model.CustomerDTO;
 import guru.springframework.repositories.CustomerRepository;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
     
     public final CustomerMapper customerMapper;
@@ -20,10 +23,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> getAllCustomers() {
 
-        return customerRepository.findAll()
-                .stream()
-                .map(customerMapper::customerToCustomerDTO)
-                .collect(Collectors.toList());
+        return customerRepository
+            .findAll()
+            .stream()
+            .map(customer -> {
+                CustomerDTO customerDto = customerMapper.customerToCustomerDTO(customer);
+                customerDto.setCustomerUrl("/api/v1/customers/" + customer.getId());
+                return customerDto;
+            })
+            .collect(Collectors.toList());
     }
 
     @Override

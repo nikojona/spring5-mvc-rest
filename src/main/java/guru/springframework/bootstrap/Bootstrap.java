@@ -10,21 +10,28 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
-
-	private CategoryRepository categoryRepository;
-	private CustomerRepository customerRepository;
-
-	public Bootstrap(CustomerRepository customerRepository) {
+	
+	private final CategoryRepository categoryRepository;
+	private final CustomerRepository customerRepository;
+	
+	public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+		this.categoryRepository = categoryRepository;
 		this.customerRepository = customerRepository;
 	}
 	
-	public Bootstrap(CategoryRepository categoryRepository) {
-		this.categoryRepository = categoryRepository;
-	}
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
+		loadCustomers();
+
+		loadCategories();
+
+
+	}
+
+
+	private void loadCategories() {
 		Category fruits = new Category();
 		fruits.setName("Fruits");
 
@@ -47,7 +54,9 @@ public class Bootstrap implements CommandLineRunner {
 		categoryRepository.save(nuts);
 		
 		System.out.println("Data Category loaded count = " + categoryRepository.count());
+	}
 
+	private void loadCustomers() {
 		Customer david = new Customer();
 		david.setFirstName("David");
 		david.setLastName("Wine");
@@ -75,8 +84,6 @@ public class Bootstrap implements CommandLineRunner {
 		customerRepository.save(sam);
 
 		System.out.println("Data Customer loaded count = " + customerRepository.count());
-
 	}
-	
 	
 }

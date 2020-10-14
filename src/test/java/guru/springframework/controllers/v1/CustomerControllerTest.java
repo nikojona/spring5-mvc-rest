@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.data.web.JsonPath;
 import org.springframework.http.MediaType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
