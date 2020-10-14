@@ -37,7 +37,7 @@ public class CategoryServiceTest {
 	}
 	
 	@Test
-	public void getAllCategories() {
+	public void testGetAllCategories() {
 		
 		// given
 		List<Category> categories = Arrays.asList(new Category(), new Category(), new Category());
@@ -52,7 +52,7 @@ public class CategoryServiceTest {
 	}
 
 	@Test
-	public void getCategoryByName() {
+	public void testGetCategoryByName() {
 		
 		//given
 		Category category = new Category();
