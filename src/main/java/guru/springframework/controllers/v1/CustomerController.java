@@ -29,11 +29,17 @@ public class CustomerController {
             new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK);
     }
 
-    @GetMapping("{firstName}")
-    public ResponseEntity<CustomerDTO> getCustomerByFirstName(@PathVariable String firstName) {
-        
-        return new ResponseEntity<CustomerDTO> (
-            customerService.getCustomerByFirstName(firstName), HttpStatus.OK);
+    @GetMapping({"{id}"})
+    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
+
+        return new ResponseEntity<CustomerDTO>(customerService.getCustomerById(id), HttpStatus.OK);
     }
+
+    // @GetMapping("{firstName}")
+    // public ResponseEntity<CustomerDTO> getCustomerByFirstName(@PathVariable String firstName) {
+        
+    //     return new ResponseEntity<CustomerDTO> (
+    //         customerService.getCustomerByFirstName(firstName), HttpStatus.OK);
+    // }
 
 }

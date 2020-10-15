@@ -16,7 +16,8 @@ import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
+// import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -53,22 +54,41 @@ public class CustomerServiceTest {
         assertEquals(4, customerDTO.size());
     }
 
-    public void testGetCustomerByFirstName() throws Exception {
+    @Test
+    public void testGetCustomerById() throws Exception {
 
         // given
-        Customer customer = new Customer();
-        customer.setId(ID);
-        customer.setFirstName(FIRST_NAME);
-        customer.setLastName(LAST_NAME);
+        Customer customer1 = new Customer();
+        customer1.setId(1L);
+        customer1.setFirstName("Hillary");
+        customer1.setLastName("Clinton");
 
-        when(customerRepository.findByFirstName(anyString())).thenReturn(customer);
+        when(customerRepository.findById(anyLong())).thenReturn(java.util.Optional.ofNullable(customer1));
 
         // when
-        CustomerDTO customerDto = customerService.getCustomerByFirstName(FIRST_NAME);
+        CustomerDTO customerDTO1 = customerService.getCustomerById(1L);
 
-        // then
-        assertEquals(ID, customerDto.getId());
-        assertEquals(FIRST_NAME, customerDto.getFirstName());
-        assertEquals(LAST_NAME, customerDto.getLastName());
+        assertEquals("Hillary", customerDTO1.getFirstName());
     }
+
+
+    // @Test
+    // public void testGetCustomerByFirstName() throws Exception {
+
+    //     // given
+    //     Customer customer = new Customer();
+    //     customer.setId(ID);
+    //     customer.setFirstName(FIRST_NAME);
+    //     customer.setLastName(LAST_NAME);
+
+    //     when(customerRepository.findByFirstName(anyString())).thenReturn(customer);
+
+    //     // when
+    //     CustomerDTO customerDto = customerService.getCustomerByFirstName(FIRST_NAME);
+
+    //     // then
+    //     assertEquals(ID, customerDto.getId());
+    //     assertEquals(FIRST_NAME, customerDto.getFirstName());
+    //     assertEquals(LAST_NAME, customerDto.getLastName());
+    // }
 }

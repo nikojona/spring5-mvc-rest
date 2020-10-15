@@ -9,9 +9,9 @@ import guru.springframework.domain.Customer;
 
 public class CustomerMapperTest {
     
+    // public final static Long ID = 1L;
     public final static String FIRST_NAME = "Nickolas";
     public final static String LAST_NAME = "Jonathan";
-    public final static Long ID = 1L;
 
     CustomerMapper customerMapper = CustomerMapper.INSTANCE;
 
@@ -20,15 +20,15 @@ public class CustomerMapperTest {
 
         // given
         Customer customer = new Customer();
+        // customer.setId(ID);
         customer.setFirstName(FIRST_NAME);
         customer.setLastName(LAST_NAME);
-        customer.setId(ID);
 
         // when
         CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
 
         // then
-        assertEquals(Long.valueOf(ID), customerDTO.getId());
+        // assertEquals(Long.valueOf(ID), customerDTO.getId());
         assertEquals(String.valueOf(FIRST_NAME), customerDTO.getFirstName());
         assertEquals(String.valueOf(LAST_NAME), customerDTO.getLastName());
         

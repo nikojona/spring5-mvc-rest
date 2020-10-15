@@ -35,8 +35,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO getCustomerByFirstName(String firstName) {
+    public CustomerDTO getCustomerById(Long id) {
 
-        return customerMapper.customerToCustomerDTO(customerRepository.findByFirstName(firstName));
+        return customerRepository.findById(id)
+            .map(customerMapper::customerToCustomerDTO)
+            .orElseThrow(RuntimeException::new); // todo implement better exception handling
     }
+
+    // @Override
+    // public CustomerDTO getCustomerByFirstName(String firstName) {
+
+    //     return customerMapper.customerToCustomerDTO(customerRepository.findByFirstName(firstName));
+    // }
 }
