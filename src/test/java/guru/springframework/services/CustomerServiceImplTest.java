@@ -105,24 +105,26 @@ public class CustomerServiceImplTest {
     	assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
     	
     }
-
-    // @Test
-    // public void testGetCustomerByFirstName() throws Exception {
-
-    //     // given
-    //     Customer customer = new Customer();
-    //     customer.setId(ID);
-    //     customer.setFirstname(FIRST_NAME);
-    //     customer.setLastname(LAST_NAME);
-
-    //     when(customerRepository.findByFirstname(anyString())).thenReturn(customer);
-
-    //     // when
-    //     CustomerDTO customerDto = customerService.getCustomerByFirstname(FIRST_NAME);
-
-    //     // then
-    //     assertEquals(ID, customerDto.getId());
-    //     assertEquals(FIRST_NAME, customerDto.getFirstname());
-    //     assertEquals(LAST_NAME, customerDto.getLastname());
-    // }
+    
+   @Test
+   public void testSaveCustomerByDTO() throws Exception {
+	   
+    	// given
+    	CustomerDTO customerDTO = new CustomerDTO();
+    	customerDTO.setFirstname("Michael");
+    	
+    	Customer savedCustomer = new Customer();
+    	savedCustomer.setFirstname(customerDTO.getFirstname());
+    	savedCustomer.setLastname(customerDTO.getLastname());
+    	savedCustomer.setId(1L);
+    	
+    	when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+    	
+    	// when
+    	CustomerDTO savedDto = customerService.saveCustomerByDTO(1L, customerDTO); 
+    	
+    	// then
+    	assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
+    	assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
+   }
 }
