@@ -7,14 +7,14 @@ import javax.persistence.Id;
 
 import lombok.Data;
 
-@Data
 @Entity
+@Data
 public class Customer {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String firstName;
-    private String lastName;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String firstname;
+	private String lastname;
 }

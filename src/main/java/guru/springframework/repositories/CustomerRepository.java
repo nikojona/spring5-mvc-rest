@@ -6,6 +6,6 @@ import guru.springframework.domain.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     
-    Customer findByFirstName(String name);
+//    Customer findByFirstName(String name);
 
 }

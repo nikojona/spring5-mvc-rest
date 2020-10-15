@@ -3,24 +3,32 @@ package guru.springframework.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
 import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     
-    public final CustomerMapper customerMapper;
-    public final CustomerRepository customerRepository;
-
-    public CustomerServiceImpl(CustomerMapper customerMapper, CustomerRepository customerRepository) {
-        this.customerMapper = customerMapper;
-        this.customerRepository = customerRepository;
-    }
+    private CustomerMapper customerMapper;
+    private CustomerRepository customerRepository;
     
-    @Override
+    @Autowired
+	public void setCustomerMapper(CustomerMapper customerMapper) {
+		this.customerMapper = customerMapper;
+	}
+
+
+    @Autowired
+	public void setCustomerRepository(CustomerRepository customerRepository) {
+		this.customerRepository = customerRepository;
+	}
+
+	@Override
     public List<CustomerDTO> getAllCustomers() {
 
         return customerRepository
@@ -47,4 +55,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     //     return customerMapper.customerToCustomerDTO(customerRepository.findByFirstName(firstName));
     // }
+    
+    @Override
+    public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+    	
+    	Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
+    	
+    	Customer savedCustomer = customerRepository.save(customer);
+    	
+    	CustomerDTO returnDTO = customerMapper.customerToCustomerDTO(savedCustomer);
+    	
+    	returnDTO.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
+    	
+    	return returnDTO;
+    }
 }
