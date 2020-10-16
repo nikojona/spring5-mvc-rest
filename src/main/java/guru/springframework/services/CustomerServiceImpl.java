@@ -21,9 +21,13 @@ public class CustomerServiceImpl implements CustomerService {
 	public void setCustomerMapper(CustomerMapper customerMapper) {
 		this.customerMapper = customerMapper;
 	}
+    
+    public CustomerServiceImpl(CustomerMapper customerMapper, CustomerRepository customerRepository) {
+		this.customerMapper = customerMapper;
+		this.customerRepository = customerRepository;
+	}
 
-
-    @Autowired
+	@Autowired
 	public void setCustomerRepository(CustomerRepository customerRepository) {
 		this.customerRepository = customerRepository;
 	}
@@ -53,15 +57,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
     	
-    	Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
+    	/**
+    	 // you can do this way also 
+	    	Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
+	    	Customer savedCustomer = customerRepository.save(customer);
+	    	CustomerDTO returnDTO = customerMapper.customerToCustomerDTO(savedCustomer);
+	    	returnDTO.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
+	    	return returnDTO;
+    	 */
     	
-    	Customer savedCustomer = customerRepository.save(customer);
-    	
-    	CustomerDTO returnDTO = customerMapper.customerToCustomerDTO(savedCustomer);
-    	
-    	returnDTO.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
-    	
-    	return returnDTO;
+    	return saveAndReturnDTO(customerMapper.customerDtoToCustomer(customerDTO));
     }
         
     private CustomerDTO saveAndReturnDTO(Customer customer) {
@@ -82,6 +87,23 @@ public class CustomerServiceImpl implements CustomerService {
     	customer.setId(id);
     	
     	return saveAndReturnDTO(customer);
+    }
+    
+    @Override
+    public CustomerDTO patchCustomerByDTO(Long id, CustomerDTO customerDTO) {
+    	
+    	return customerRepository.findById(id).map(customer -> {
+    		
+			if(customerDTO.getFirstname() != null) {
+				customer.setFirstname(customerDTO.getFirstname());
+			}
+			
+			if(customerDTO.getLastname() != null) {
+				customer.setLastname(customerDTO.getLastname());
+			}
+			
+			return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+    	}).orElseThrow(RuntimeException::new); // todo implement better exception handling
     }
     
 }
