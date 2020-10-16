@@ -53,7 +53,7 @@ public class CustomerServiceImplPatchTest {
 	@Test
 	public void patchCustomerUpdateFirstName() throws Exception {
 		
-		String updatedName = "updatedName";
+		String updatedName = "updatedFirstName";
 		Long id = getCustomerIdValue();
 		
 		Customer originalCustomer = customerRepository.getOne(id);
@@ -72,13 +72,13 @@ public class CustomerServiceImplPatchTest {
 		assertNotNull(updatedCustomer);
 		assertEquals(updatedName, updatedCustomer.getFirstname());
 		assertThat(originalFirstName, not(equalTo(updatedCustomer.getFirstname())));
-		assertThat(originalLastName, not(equalTo(updatedCustomer.getLastname())));
+		assertThat(originalLastName, (equalTo(updatedCustomer.getLastname())));
 	}
 	
 	@Test
 	public void patchCustomerUpdateLastName() throws Exception {
 		
-		String updatedName = "updatedName";
+		String updatedName = "updatedLastName";
 		Long id = getCustomerIdValue();
 		
 		Customer originalCustomer = customerRepository.getOne(id);
@@ -96,7 +96,7 @@ public class CustomerServiceImplPatchTest {
 		
 		assertNotNull(updatedCustomer);
 		assertEquals(updatedName, updatedCustomer.getLastname());
-		assertThat(originalFirstName, not(equalTo(updatedCustomer.getFirstname())));
+		assertThat(originalFirstName, (equalTo(updatedCustomer.getFirstname())));
 		assertThat(originalLastName, not(equalTo(updatedCustomer.getLastname())));
 	}
 	
