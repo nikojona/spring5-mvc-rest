@@ -17,10 +17,11 @@ import guru.springframework.repositories.CustomerRepository;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class CustomerServiceImplTest {
@@ -122,5 +123,15 @@ public class CustomerServiceImplTest {
     	// then
     	assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
     	assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
+   }
+   
+   @Test
+   public void testDeleteCustomerById() throws Exception {
+	   
+	   Long id = 1L;
+	   
+	   customerRepository.deleteById(id);
+	   
+	   verify(customerRepository, times(1)).deleteById(anyLong());
    }
 }

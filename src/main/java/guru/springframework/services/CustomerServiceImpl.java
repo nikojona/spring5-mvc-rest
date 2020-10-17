@@ -49,13 +49,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO getCustomerById(Long id) {
 
-        CustomerDTO returnDTO = customerRepository.findById(id)
+        return customerRepository.findById(id)
             .map(customerMapper::customerToCustomerDTO)
+            .map(customerDTO -> {
+            	
+            	// Set API URL
+            	customerDTO.setCustomerUrl("/api/v1/customers/" + id);
+            	
+            	return customerDTO;
+            })
             .orElseThrow(RuntimeException::new); // todo implement better exception handling
-        
-		returnDTO.setCustomerUrl("/api/v1/customers/" + id);
-		
-		return returnDTO;
     }
     
     @Override
@@ -114,5 +117,11 @@ public class CustomerServiceImpl implements CustomerService {
 			
     	}).orElseThrow(RuntimeException::new); // todo implement better exception handling
     }
+
+	@Override
+	public void deleteCustomerById(Long id) {
+		
+		customerRepository.deleteById(id);
+	}
     
 }
