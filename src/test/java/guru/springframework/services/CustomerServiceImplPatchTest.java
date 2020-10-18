@@ -16,6 +16,7 @@ import guru.springframework.bootstrap.Bootstrap;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.CustomerRepository;
+import guru.springframework.repositories.VendorRepository;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,6 +35,9 @@ public class CustomerServiceImplPatchTest {
 	@Autowired
 	CategoryRepository categoryRepository;
 	
+	@Autowired
+	VendorRepository vendorRepository;
+	
 	CustomerService customerService;
 	
 	@BeforeAll
@@ -43,7 +47,7 @@ public class CustomerServiceImplPatchTest {
 		System.out.println(customerRepository.findAll().size());
 		
 		// setup data for testing
-		Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+		Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
 		bootstrap.run(); // load data
 		
 		customerService = new CustomerServiceImpl(CustomerMapper.INSTANCE, customerRepository);
