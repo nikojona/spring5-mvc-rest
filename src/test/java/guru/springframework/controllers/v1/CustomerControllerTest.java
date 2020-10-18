@@ -2,7 +2,6 @@ package guru.springframework.controllers.v1;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-// import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -146,7 +145,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     	when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
     	
     	// when/then
-    	mockMvc.perform(put("/api/v1/customers/1")
+    	mockMvc.perform(put(CustomerController.BASE_URL + "/1")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(asJsonString(customerDTO)))
     		.andExpect(status().isOk())
@@ -171,7 +170,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     	when(customerService.patchCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
     	
     	// when
-    	mockMvc.perform(patch("/api/v1/customers/1")
+    	mockMvc.perform(patch(CustomerController.BASE_URL + "/1")
     		.contentType(MediaType.APPLICATION_JSON)
     		.content(asJsonString(customerDTO)))
     		.andExpect(status().isOk())

@@ -70,7 +70,7 @@ public class VendorServiceImpl implements VendorService{
 	}
 
 	@Override
-	public VendorDTO saveVendorByDTO(VendorDTO vendorDTO, Long id) {
+	public VendorDTO saveVendorByDTO(Long id, VendorDTO vendorDTO) {
 		
 		Vendor vendor =  vendorMapper.vendorDtoToVendor(vendorDTO);
 		vendor.setId(id);
@@ -79,7 +79,7 @@ public class VendorServiceImpl implements VendorService{
 	}
 
 	@Override
-	public VendorDTO patchVendorByDTO(VendorDTO vendorDTO, Long id) {
+	public VendorDTO patchVendorByDTO(Long id, VendorDTO vendorDTO) {
 		
 		return vendorRepository.findById(id).map(vendor -> {
 			
