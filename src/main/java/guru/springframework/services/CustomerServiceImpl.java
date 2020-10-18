@@ -18,14 +18,14 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerMapper customerMapper;
     private CustomerRepository customerRepository;
     
+    public CustomerServiceImpl(CustomerMapper customerMapper, CustomerRepository customerRepository) {
+    	this.customerMapper = customerMapper;
+    	this.customerRepository = customerRepository;
+    }
+    
     @Autowired
 	public void setCustomerMapper(CustomerMapper customerMapper) {
 		this.customerMapper = customerMapper;
-	}
-    
-    public CustomerServiceImpl(CustomerMapper customerMapper, CustomerRepository customerRepository) {
-		this.customerMapper = customerMapper;
-		this.customerRepository = customerRepository;
 	}
 
 	@Autowired
@@ -40,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
             .findAll()
             .stream()
             .map(customer -> {
-                CustomerDTO customerDto = customerMapper.customerToCustomerDTO(customer);
+                CustomerDTO customerDto = customerMapper.customerToCustomerDto(customer);
                 customerDto.setCustomerUrl(getCustomerUrl(customer.getId()));
                 return customerDto;
             })
@@ -51,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO getCustomerById(Long id) {
 
         return customerRepository.findById(id)
-            .map(customerMapper::customerToCustomerDTO)
+            .map(customerMapper::customerToCustomerDto)
             .map(customerDTO -> {
             	
             	// Set API URL
@@ -77,17 +77,6 @@ public class CustomerServiceImpl implements CustomerService {
     	return saveAndReturnDTO(customerMapper.customerDtoToCustomer(customerDTO));
     }
         
-    private CustomerDTO saveAndReturnDTO(Customer customer) {
-    	
-    	Customer savedCustomer = customerRepository.save(customer);
-    	
-    	CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
-    	
-    	returnDto.setCustomerUrl(getCustomerUrl(savedCustomer.getId()));
-    	
-    	return returnDto;
-    }
-    
     @Override
     public CustomerDTO saveCustomerByDTO(Long id, CustomerDTO customerDTO) {
     	
@@ -110,7 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
 				customer.setLastname(customerDTO.getLastname());
 			}
 			
-			CustomerDTO returnDTO = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+			CustomerDTO returnDTO = customerMapper.customerToCustomerDto(customerRepository.save(customer));
 			
 			returnDTO.setCustomerUrl(getCustomerUrl(id));
 			
@@ -125,9 +114,21 @@ public class CustomerServiceImpl implements CustomerService {
 		customerRepository.deleteById(id);
 	}
 	
+	private CustomerDTO saveAndReturnDTO(Customer customer) {
+		
+		Customer savedCustomer = customerRepository.save(customer);
+		
+		CustomerDTO returnDto = customerMapper.customerToCustomerDto(savedCustomer);
+		
+		returnDto.setCustomerUrl(getCustomerUrl(savedCustomer.getId()));
+		
+		return returnDto;
+	}
+
 	private String getCustomerUrl(Long id) {
 		
 		return CustomerController.BASE_URL + "/" + id;
 	}
     
 }
+
