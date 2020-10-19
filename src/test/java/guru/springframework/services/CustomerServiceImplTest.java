@@ -2,6 +2,7 @@ package guru.springframework.services;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
 import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.controllers.v1.CustomerController;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
 
@@ -72,7 +74,7 @@ public class CustomerServiceImplTest {
         customer1.setFirstname("Hillary");
         customer1.setLastname("Clinton");
 
-        when(customerRepository.findById(anyLong())).thenReturn(java.util.Optional.ofNullable(customer1));
+        when(customerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(customer1));
 
         // when
         CustomerDTO customerDTO1 = customerService.getCustomerById(1L);
@@ -99,7 +101,7 @@ public class CustomerServiceImplTest {
     	
     	// then
     	assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
-    	assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
+    	assertEquals(CustomerController.BASE_URL + "/1", savedDto.getCustomerUrl());
     	
     }
     
@@ -122,14 +124,13 @@ public class CustomerServiceImplTest {
     	
     	// then
     	assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
-    	assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
+    	assertEquals(CustomerController.BASE_URL + "/1", savedDto.getCustomerUrl());
    }
    
    @Test
    public void testDeleteCustomerById() throws Exception {
 	   
-	   Long id = 1L;
-	   
+	   Long id = 1L;	   
 	   customerRepository.deleteById(id);
 	   
 	   verify(customerRepository, times(1)).deleteById(anyLong());
