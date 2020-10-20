@@ -127,7 +127,6 @@ public class VendorServiceImplTest {
 //		then(vendorRepository).should().save(any(Vendor.class));
 		then(vendorRepository).should(atLeastOnce()).save(any(Vendor.class));
 		
-		
 		assertThat(savedDto.getVendorUrl(), containsString("1"));
 	}
 	
@@ -170,9 +169,9 @@ public class VendorServiceImplTest {
 		VendorDTO savedDto = vendorService.patchVendor(ID_1, vendorDTO);
 		
 		// then
-		// 'should' defaults to time = 1
 		then(vendorRepository).should().save(any(Vendor.class));
 		
+		// 'should' defaults to time = 1
 //		then(vendorRepository).should(times(1)).findById(anyLong());
 		then(vendorRepository).should(atLeast(1)).findById(anyLong());
 		
