@@ -1,8 +1,6 @@
 package guru.springframework.controllers.v1;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,13 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import guru.springframework.api.v1.model.VendorDTO;
 import guru.springframework.api.v1.model.VendorListDTO;
 import guru.springframework.services.VendorService;
 
 
-@Controller
+@RestController
 @RequestMapping(VendorController.BASE_URL)
 public class VendorController {
 	
@@ -31,44 +31,45 @@ public class VendorController {
 	}
 
 	@GetMapping
-	public ResponseEntity<VendorListDTO> getAllVendors() {
+	@ResponseStatus(HttpStatus.OK)
+	public VendorListDTO getVendorsList() {
 		
-		return new ResponseEntity<VendorListDTO>(
-			new VendorListDTO(vendorService.getAllVendors()), HttpStatus.OK);
+		return vendorService.getAllVendors();
 	}
 	
 	@GetMapping({"/{id}"})
-	public ResponseEntity<VendorDTO> getVendorById(@PathVariable Long id) {
+	@ResponseStatus(HttpStatus.OK)
+	public VendorDTO getVendorById(@PathVariable Long id) {
 		
-		return new ResponseEntity<VendorDTO>(vendorService.getVendorById(id), HttpStatus.OK);
+		return vendorService.getVendorById(id);
 	}
 	
 	@PostMapping
-	public ResponseEntity<VendorDTO> createNewVendor(@RequestBody VendorDTO vendorDTO) {
+	@ResponseStatus(HttpStatus.CREATED)
+	public VendorDTO createNewVendor(@RequestBody VendorDTO vendorDTO) {
 		
-		return new ResponseEntity<VendorDTO>(vendorService.createNewVendor(vendorDTO), 
-				HttpStatus.CREATED);
+		return vendorService.createNewVendor(vendorDTO);
 	}
 	
 	@PutMapping({"/{id}"})
-	public ResponseEntity<VendorDTO> updateVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO) {
+	@ResponseStatus(HttpStatus.OK)
+	public VendorDTO updateVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO) {
 		
-		return new ResponseEntity<VendorDTO>(vendorService.saveVendorByDTO(id, vendorDTO), 
-				HttpStatus.OK);
+		return vendorService.saveVendorByDTO(id, vendorDTO);
 	}
 	
 	
 	@PatchMapping({"/{id}"})
-	public ResponseEntity<VendorDTO> patchVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO) {
+	@ResponseStatus(HttpStatus.OK)
+	public VendorDTO patchVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO) {
 		
-		return new ResponseEntity<VendorDTO>(vendorService.patchVendorByDTO(id, vendorDTO),
-				HttpStatus.OK);
+		return vendorService.patchVendor(id, vendorDTO);
 	}
 	
 	@DeleteMapping({"/{id}"})
-	public ResponseEntity<Void> deleteVendor(@PathVariable Long id) {
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteVendor(@PathVariable Long id) {
 		
 		vendorService.deleteVendorById(id);
-		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 }
