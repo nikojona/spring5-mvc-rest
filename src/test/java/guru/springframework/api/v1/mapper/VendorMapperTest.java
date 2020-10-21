@@ -4,6 +4,7 @@ import guru.springframework.api.v1.model.VendorDTO;
 import guru.springframework.domain.Vendor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,26 @@ public class VendorMapperTest {
 	public static final Long ID = 1L;
 	
 	VendorMapper vendorMapper = VendorMapper.INSTANCE;
+	
+	@Test
+    public void testVendorToVendorDtoIfNull() throws Exception {
+    	// given
+		Vendor vendor = null;
+    	
+    	// when
+		VendorDTO vendorDto = vendorMapper.vendorToVendorDto(vendor);
+        assertNull(vendorDto);
+    }
+    
+    @Test
+    public void testVendorDtoToVendorIfNull() throws Exception {
+    	// given
+    	VendorDTO vendorDto = null;
+    	
+    	// when
+    	Vendor vendor = vendorMapper.vendorDtoToVendor(vendorDto);
+        assertNull(vendor);
+    }
 	
 	@Test
 	public void vendorToVendorDto() throws Exception {

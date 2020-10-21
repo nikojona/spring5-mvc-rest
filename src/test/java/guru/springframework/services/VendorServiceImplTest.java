@@ -13,6 +13,8 @@ import guru.springframework.api.v1.model.VendorListDTO;
 import guru.springframework.domain.Vendor;
 import guru.springframework.repositories.VendorRepository;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
@@ -176,6 +178,7 @@ public class VendorServiceImplTest {
 		then(vendorRepository).should(atLeast(1)).findById(anyLong());
 		
 		assertThat(savedDto.getVendorUrl(), containsString("1"));
+		assertNotNull(vendorDTO);
 		
 	}
 	
@@ -187,6 +190,8 @@ public class VendorServiceImplTest {
 		
 		// then
 		then(vendorRepository).should().deleteById(anyLong());
+		
+		
 	}
 	
 	private Vendor getVendor1() {

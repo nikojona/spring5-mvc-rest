@@ -17,10 +17,12 @@ import guru.springframework.controllers.v1.CustomerController;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
@@ -82,6 +84,25 @@ public class CustomerServiceImplTest {
         assertEquals("Hillary", customerDTO1.getFirstname());
     }
     
+	@Test
+	public void testGetCustomerByIdNotFound() {
+		
+//		assertThrows(NullPointerException.class, () -> { // it will error
+		assertThrows(ResourceNotFoundException.class, () -> {
+
+			// given
+			// mockito BDD syntax since mockito 1.10.0
+			given(customerRepository.findById(anyLong())).willReturn(Optional.empty());
+			
+			// when
+			CustomerDTO customerDTO = customerService.getCustomerById(1L);
+			// then
+			then(customerRepository).should(times(1)).findById(anyLong());
+			
+		});
+		
+	}
+    
     @Test
     public void testCreateNewCustomer() throws Exception {
     	
@@ -130,9 +151,14 @@ public class CustomerServiceImplTest {
    @Test
    public void testDeleteCustomerById() throws Exception {
 	   
-	   Long id = 1L;	   
-	   customerRepository.deleteById(id);
+	   Long id = 1L;
 	   
+	   customerRepository.deleteById(id);
 	   verify(customerRepository, times(1)).deleteById(anyLong());
+	   
+//	   customerService.deleteCustomerById(id);
+//	   verify(customerService, times(1)).deleteCustomerById(anyLong());
+	   
+
    }
 }

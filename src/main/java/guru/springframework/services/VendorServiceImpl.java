@@ -77,11 +77,12 @@ public class VendorServiceImpl implements VendorService{
 			.map(vendor -> {
 				
 				// todo if more properties, add more if statements
+//				if(vendorDTO.getName() != null) {
+//					vendor.setName(vendorDTO.getName());
+//				}
 				
-				if(vendorDTO.getName() != null) {
-					vendor.setName(vendorDTO.getName());
-				}
-				
+				vendor.setName(vendorDTO.getName());
+					
 				return saveAndReturnDTO(vendor);
 			
 		}).orElseThrow(ResourceNotFoundException::new);
