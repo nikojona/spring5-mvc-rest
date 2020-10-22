@@ -6,7 +6,7 @@ import guru.springframework.api.v1.model.VendorListDTO;
 public interface VendorService {
 	
 	VendorDTO getVendorById(Long id);
-	
+		
 	VendorListDTO getAllVendors();
 	
 	VendorDTO createNewVendor(VendorDTO vendorDTO);

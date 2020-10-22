@@ -13,8 +13,6 @@ import guru.springframework.api.v1.model.VendorListDTO;
 import guru.springframework.domain.Vendor;
 import guru.springframework.repositories.VendorRepository;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
@@ -29,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -191,9 +190,8 @@ public class VendorServiceImplTest {
 		// then
 		then(vendorRepository).should().deleteById(anyLong());
 		
-		
 	}
-	
+		
 	private Vendor getVendor1() {
 		
 		Vendor vendor = new Vendor();
